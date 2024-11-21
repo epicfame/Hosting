@@ -1,105 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Untuk Zefa</title>
-    <style>
-        #content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        #pertanyaan {
-            opacity: 0;
-            transition: opacity 1s ease-in-out; /* Add transition effect */
-        }
-        #flower {
-            display: none;
-            transition: opacity 1s ease-in-out; /* Add transition effect */
-        }
-        #heart {
-            display: none;
-            transition: opacity 1s ease-in-out; /* Add transition effect */
-        }
-        #gamau {
-            position: absolute;
-            right:250px;
-            transition: transform .2s ease-in-out;
-        }
-        .button-container {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Animation</title>
+  <style>
+    /* @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:wght@700&family=Poppins:wght@400;700&display=swap'); */
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      margin: 0;
+      overflow: hidden;
+      flex-direction: column;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .heart {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      transform: rotate(-45deg) scale(0);
+      opacity: 0;
+    }
+
+    .heart:before,
+    .heart:after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      border-radius: 50%;
+    }
+
+    .heart:before {
+      top: -50px;
+      left: 0;
+    }
+
+    .heart:after {
+      left: 50px;
+      top: 0;
+    }
+
+    .message,
+    .message2 {
+      font-size: 20px;
+      color: white;
+      margin-top: 20px;
+      opacity: 0;
+      text-align: center;
+    }
+
+    .message,
+    .message2 {
+    font-family: 'Press Start 2P', cursive;
+      /* font-family: 'Pacifico', cursive; */
+      font-size: 30px;
+      display: none;
+    }
+
+  </style>
 </head>
 <body>
-<div id="content">
-    <button id="btn" type="button">Start!</button>
+  <div class="heart" style="rotate: -45deg;"></div>
+  <div class="message">CLICK THE HEART!</div>
+  <div class="message2">I LOVE YOU, ZEFAAA ❤️</div>
 
-    <div id="pertanyaan">
-        <h1>Sayang koko ga km?</h1>
-        <div class="button-container">
-            <button id="yes">YES!</button>
-            <button id="yes1">ENGGAK TP BOHONG (Jadi sayang)</button>
-            <button id="gamau">gamau</button>
-        </div>
-    </div>
+  <!-- Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+  <script>
+    const heart = document.querySelector('.heart');
+    const message = document.querySelector('.message');
+    const message2 = document.querySelector('.message2');
 
-    <div id="heart">
-        <img src="https://images.theconversation.com/files/122137/original/image-20160511-18171-kulas4.jpg?ixlib=rb-4.1.0&q=45&auto=format&w=1356&h=668&fit=crop" alt="">
-    </div>
+    // Initial heart animation: scale up and pulse
+    anime
+      .timeline()
+      .add({
+        targets: heart,
+        scale: [0, 1],
+        opacity: [0, 1],
+        duration: 1000,
+        easing: 'easeOutElastic(1, 0.5)',
+      })
+      .add({
+        targets: heart,
+        translateY: -30,
+        translateX: 30,
+        duration: 500,
+        easing: 'easeOutSine',
+      })
+      .add({
+        targets: heart,
+        scale: [
+          { value: 1.2, duration: 500, easing: 'easeInOutSine' },
+          { value: 1, duration: 500, easing: 'easeInOutSine' },
+        ],
+        loop: true,
+        delay: 500,
+      });
 
-    <div id="flower">
-        <img src="https://images.tokopedia.net/img/cache/700/VqbcmM/2022/11/3/66281751-e900-46cf-9e9c-d17ce222b7fc.jpg" alt="">
-    </div>
-
-
-</div>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
-<script>
-    $('#btn').click(function(){
-        $('#btn').animate({opacity:0}, 1000, function() {
-            $(this).hide(); // hide the button after fade out
-        });
-        $('#pertanyaan').show().animate({opacity:1}, 1000); // show the div before fade in
-    })
-
-    $('#gamau').hover(function() {
-        var maxX = $(window).width() - $(this).outerWidth();
-        var maxY = $(window).height() - $(this).outerHeight();
-        $(this).css('transform', 'translate(' + Math.random() * maxX + 'px, ' + Math.random() * maxY + 'px)');
+    // Show message
+    message.style.display = 'block';
+    anime({
+      targets: message,
+      opacity: [0, 1],
+      duration: 1000,
+      delay: 2000,
+      easing: 'easeInOutSine',
     });
 
-    $('#gamau').click(function(){
-        alert('ga bole i hueeeee :P');
-    })
+    // Event listener to make the heart vanish on click
+    heart.addEventListener('click', () => {
+      anime({
+        targets: [heart, message],
+        opacity: [1, 0],
+        duration: 500,
+        easing: 'easeOutSine',
+        complete: () => {
+          heart.style.display = 'none';
+          message.style.display = 'none';
 
-    $('#yes').click(function(){
-        alert('YEYYY SAYANG ZEFA BANYA BANYAK BANYAKK POLL');
-        $('#pertanyaan').hide(); // hide the div before fade in
-        showFlower();
-    })
-
-    $('#yes1').click(function(){
-        alert('dah kalo sayang tu tinggal bilang sayang aja :D');
-        $('#pertanyaan').hide(); // hide the div before fade in
-        showHeart();
-    })
-
-    function showFlower(){
-        $('#flower').show().animate({opacity:1}, 1000);
-    }
-
-    function showHeart(){
-        $('#heart').show().animate({opacity:1}, 1000);
-    }
-
-</script>
+          // Show and animate message2
+          message2.style.display = 'block';
+          anime({
+            targets: message2,
+            scale: [0.5, 1.2, 1],
+            opacity: [0, 1],
+            duration: 1000,
+            easing: 'easeOutElastic(1, 0.5)',
+          });
+        },
+      });
+    });
+  </script>
 </body>
 </html>
